@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "tgbot-template"
+version = "0.1.0"
+description = "aiogram template"
+license = "MIT License"
+authors = ["Dmitry Drozdov <dinochrom1@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiogram = {version = "^3.0.0b7", allow-prereleases = true}
+betterlogging = "^0.2.1"
+pydantic = {extras = ["dotenv"], version = "^1.10.7"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

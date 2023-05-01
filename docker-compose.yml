@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  bot:
+    container_name: bot
+    stop_signal: SIGINT
+    volumes:
+      - ./app:/app
+    build: .
+    tty: True
+    restart: always
+    command: python3 -m bot
