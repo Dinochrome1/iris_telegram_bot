@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     bot_image_name: str = 'default_bot_image_name'
     bot_name: str = 'default_bot_name'
     admin_id: int
+    api_url: str
 
     class Config:
         env_file = '.env'
