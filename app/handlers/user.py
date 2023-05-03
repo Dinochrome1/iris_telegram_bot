@@ -1,6 +1,7 @@
 import requests
-from aiogram import Router, types
+from aiogram import Router, types, Bot
 from aiogram.filters import CommandStart, Command
+from aiogram.types import FSInputFile
 
 from config import config
 
@@ -19,8 +20,8 @@ async def get_ping_pong(message: types.Message):
     await message.reply(str(response.json()))
 
 
-@user_router.message(Command("t"))
-async def post_get_predict(message: types.Message):
+@user_router.message(Command("get_predict"))
+async def post_get_predict(message: types.Message, bot: Bot):
     url = f'{config.api_url}predict_flower'
     a = message.text.split()[1:5]
     response = requests.post(url,
@@ -28,4 +29,12 @@ async def post_get_predict(message: types.Message):
                                    "sepal_width": a[1],
                                    "petal_length": a[2],
                                    "petal_width": a[3]})
-    await message.reply(str(response.json()))
+
+    print(iris_predict := response.json()['flower_class'])
+
+    pic = {"Iris Setosa": "media/setosa.png",
+             "Iris Versicolour": "media/versicolor.png",
+             "Iris Virginica": "media/virginica.png"}
+
+    photo = FSInputFile(pic[iris_predict])
+    await bot.send_photo(message.chat.id, photo, caption=iris_predict)
