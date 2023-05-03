@@ -12,6 +12,8 @@ async def set_commands(bot: Bot):
                            description='Помощь'),
                 BotCommand(command='ping',
                            description='если хочешь получить понг?'),
+                BotCommand(command='get_predict',
+                           description='получить предсказание'),
                 BotCommand(command='cancel',
                            description='Сбросить')]
     await bot.set_my_commands(commands, BotCommandScopeDefault())
