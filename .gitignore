@@ -1,3 +1,5 @@
 /app/.env
 /.idea/
 /__TEMP.py
+/poetry.lock
+/.venv/

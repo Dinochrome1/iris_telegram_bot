@@ -8,9 +8,8 @@ echo_router = Router()
 
 @echo_router.message(F.text, StateFilter(None))
 async def bot_echo(message: types.Message):
-    text = ["Эхо без состояния.",
-            "Сообщение:",
-            message.text]
+    text = ["Неизвестная команда",
+            "Выберите команду /help для получения справки"]
     await message.answer('\n'.join(text))
 
 

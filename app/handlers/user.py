@@ -24,12 +24,14 @@ async def get_ping_pong(message: types.Message):
 async def post_get_predict(message: types.Message, bot: Bot):
     url = f'{config.api_url}predict_flower'
     a = message.text.split()[1:5]
+    print(a)
     response = requests.post(url,
                              json={"sepal_length": a[0],
                                    "sepal_width": a[1],
                                    "petal_length": a[2],
                                    "petal_width": a[3]})
 
+    # print(iris_predict := response.json())
     print(iris_predict := response.json()['flower_class'])
 
     pic = {"Iris Setosa": "media/setosa.png",
