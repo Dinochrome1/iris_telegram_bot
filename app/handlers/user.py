@@ -13,13 +13,6 @@ async def user_start(message: types.Message):
     await message.reply("Здравствуй, обычный пользователь!")
 
 
-@user_router.message(Command("ping"))
-async def get_ping_pong(message: types.Message):
-    url = config.api_url
-    response = requests.get(url)
-    await message.reply(str(response.json()))
-
-
 @user_router.message(Command("get_predict"))
 async def post_get_predict(message: types.Message, bot: Bot):
     url = f'{config.api_url}predict_flower'
@@ -35,8 +28,8 @@ async def post_get_predict(message: types.Message, bot: Bot):
     print(iris_predict := response.json()['flower_class'])
 
     pic = {"Iris Setosa": "media/setosa.png",
-             "Iris Versicolour": "media/versicolor.png",
-             "Iris Virginica": "media/virginica.png"}
+           "Iris Versicolour": "media/versicolor.png",
+           "Iris Virginica": "media/virginica.png"}
 
     photo = FSInputFile(pic[iris_predict])
     await bot.send_photo(message.chat.id, photo, caption=iris_predict)
