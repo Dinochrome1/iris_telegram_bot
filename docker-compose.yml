@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   bot:
-    container_name: bot
+    container_name: iris_bot
     stop_signal: SIGINT
     volumes:
       - ./app:/app
