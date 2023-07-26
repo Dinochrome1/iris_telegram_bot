@@ -1,6 +1,10 @@
+import logging
+
 import requests
 from aiogram import Router, types, Bot, F
+from aiogram import html
 from aiogram.filters import Command
+from aiogram.filters import CommandObject
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, FSInputFile
 
@@ -28,6 +32,33 @@ async def user_start(message: types.Message, bot: Bot, state: FSMContext):
 (четыре числа разделенные пробелами)zzz'''
     await bot.send_photo(message.chat.id, photo, caption=text)
     await state.set_state(GetFlowerPrediction.data_waiting)
+
+
+@user_router.message(Command("gp"))
+async def cmd_gp(message: types.Message, command: CommandObject, bot: Bot, state: FSMContext):
+    # logging.error(command.args)
+    if command.args:
+        # await message.answer(f"Вы ввели следующие аргументы: {html.code(html.quote(command.args))}")
+        photo = FSInputFile('media/iris.png')
+        text = '''Щаз будет ответ'''
+        await bot.send_photo(message.chat.id, photo, caption=text)
+        url = f'{config.api_url}predict_flower'
+        a = command.args.split()[:4]
+        logging.error(a)
+        response = requests.post(url, json={"sepal_length": a[0],
+                                            "sepal_width": a[1],
+                                            "petal_length": a[2],
+                                            "petal_width": a[3]})
+        print(iris_predict := response.json()['flower_class'])
+        pic = {"Iris Setosa": "media/setosa.png",
+               "Iris Versicolour": "media/versicolor.png",
+               "Iris Virginica": "media/virginica.png"}
+        photo = FSInputFile(pic[iris_predict])
+        await bot.send_photo(message.chat.id,
+                             photo)  # , caption=iris_predict, reply_markup=types.ReplyKeyboardRemove())
+        await state.clear()
+    else:
+        await message.answer(f"Пожалуйста, пожалуйста введите аргументы команды {html.code('/gp')}!")
 
 
 @user_router.message(GetFlowerPrediction.data_waiting)
