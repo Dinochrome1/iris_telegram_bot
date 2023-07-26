@@ -7,11 +7,11 @@ authors = ["Dmitry Drozdov <dinochrom1@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-aiogram = {version = "^3.0.0b7", allow-prereleases = true}
+python = "^3.11"
+aiogram = {version = "^3.0.0b8", allow-prereleases = true}
 betterlogging = "^0.2.1"
-pydantic = {extras = ["dotenv"], version = "^1.10.7"}
-requests = "^2.29.0"
+pydantic-settings = "^2.0.2"
+requests = "^2.31.0"
 
 
 [build-system]

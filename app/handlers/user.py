@@ -1,6 +1,6 @@
 import requests
-from aiogram import Router, types, Bot
-from aiogram.filters import Command, Text
+from aiogram import Router, types, Bot, F
+from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, FSInputFile
 
@@ -13,13 +13,12 @@ user_router = Router()
 # сбросить текущее состояние
 # этот хендлер должен быть первым!
 @user_router.message(Command(commands=["cancel"]))
-@user_router.message(Text(text="отмена", ignore_case=True))
+@user_router.message(F.text.lower() == 'отмена')
 async def cmd_cancel(message: Message, state: FSMContext):
     await state.clear()
     await message.answer(text="Действие отменено")
 
 
-# @user_router.message(CommandStart())
 @user_router.message(Command("get_prediction"))
 async def user_start(message: types.Message, bot: Bot, state: FSMContext):
     photo = FSInputFile('media/iris.png')
@@ -50,7 +49,7 @@ async def post_get_predict(message: types.Message, bot: Bot, state: FSMContext):
 
 
 @user_router.message(Command(commands=["help"]))
-@user_router.message(Text(text="Помощь", ignore_case=True))
+@user_router.message(F.text.lower() == 'помощь')
 async def cmd_cancel(message: Message, state: FSMContext):
     text = '''\
 Справка.
